@@ -5,6 +5,8 @@ from tqdm import tqdm
 import pandas as pd
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+import numpy as np
+from utils import get_average_feature
 
 # APIの認証
 with open('api_key.txt') as f:
@@ -22,7 +24,6 @@ print(top_jp_song.columns)
 print(top_jp_song.head(10))
 
 song_info = pd.DataFrame()
-
 for url in tqdm(top_jp_song["URL"]):
     df = pd.DataFrame.from_dict(spotify.audio_features(url))
     song_info = pd.concat([song_info, df])
@@ -32,6 +33,9 @@ song_info = song_info.reset_index(drop=True)
 print(song_info.head(10))
 print(song_info.dtypes)
 
+# 特徴量の平均値を取得(次元ごと)
+average_feature = get_average_feature(song_info)
+print(average_feature)
 
 # アーティスト別に曲を取得する
 name = 'zutomayo'
