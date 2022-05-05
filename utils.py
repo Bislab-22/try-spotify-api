@@ -49,5 +49,6 @@ def get_average_feature(info):
 
     return average_feature
 
+
 if __name__ == '__main__':
     pass
